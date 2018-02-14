@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/05 17:31:29 by pgritsen          #+#    #+#             */
-/*   Updated: 2018/02/10 14:54:41 by pgritsen         ###   ########.fr       */
+/*   Updated: 2018/02/14 17:18:08 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # include "SDL_image.h"
 # include "SDL_mixer.h"
 
-# define ICON_PATH "./resources/images/icon.jpg"
+# define ICON_PATH "./resources/images/icon.png"
 # define FONT_PATH "./resources/fonts/"
 
 typedef struct	s_font

@@ -1,3 +1,4 @@
 *.o
 *.a
 obj
+wolf3d

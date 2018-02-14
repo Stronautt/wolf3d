@@ -6,7 +6,7 @@
 #    By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/10 17:05:19 by pgritsen          #+#    #+#              #
-#    Updated: 2018/02/14 01:39:55 by pgritsen         ###   ########.fr        #
+#    Updated: 2018/02/14 17:26:06 by pgritsen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,10 @@ NAME		=	wolf3d
 CC			=	gcc
 
 CFLAGS		=	-Wextra -Wall -g3 -O3 -mwindows
+
+CONFSRC		=	conf.rc
+
+CONFOBJ		=	$(CONFSRC:.rc=.o)
 
 HDRSDIR		=	./includes
 
@@ -53,9 +57,9 @@ LIBRARIES	+=	./libFLAC-8.dll
 
 all: lib $(NAME)
 
-$(NAME): $(OBJDIR) $(OBJ) $(HDRS) $(LIBSDEPS)
+$(NAME): $(OBJDIR) $(OBJ) $(HDRS) $(LIBSDEPS) $(CONFOBJ)
 	@printf "\n\033[32m[Creating $(NAME)].......\033[0m"
-	@$(CC) $(CFLAGS) -g -o $(NAME) $(OBJ) $(LIBRARIES) $(INCLUDES)
+	@$(CC) $(CFLAGS) -g -o $(NAME) $(OBJ) $(LIBRARIES) $(INCLUDES) $(CONFOBJ)
 	@printf "\033[32m[DONE]\033[0m\n"
 
 $(OBJDIR):
@@ -67,6 +71,9 @@ $(OBJ): $(OBJDIR)/%.o : $(SRCSDIR)/%.c
 	@printf "\033[32m[Compiling $<].......\033[0m"
 	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
 	@printf "\033[32m[DONE]\033[0m\n"
+
+$(CONFOBJ):
+	@windres.exe $(@:.o=.rc) $@
 
 $(LIBSDEPS): lib
 
@@ -80,13 +87,14 @@ lib:
 
 clean:
 	@printf "\n\033[31m[Cleaning $(NAME) object files].......\033[0m"
-	@rm -rf $(OBJDIR)
+	@rm -rf $(OBJDIR)	
 	@printf "\033[31m[DONE]\033[0m\n"
 
 clean_%:
 	@make -j3 -C $(LIBFOLDER)/$(subst clean_,,$@) clean
 
 fclean: clean
+	@rm -rf $(CONFOBJ)
 	@rm -rf $(NAME)
 	@printf "\033[31m[Removing $(NAME)].......[DONE]\033[0m\n"
 

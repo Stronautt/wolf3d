@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 14:08:06 by pgritsen          #+#    #+#             */
-/*   Updated: 2018/02/09 17:33:08 by pgritsen         ###   ########.fr       */
+/*   Updated: 2018/02/14 17:04:41 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	sgl_init(void)
 		s_err_handler("SDL", SDL_GetError(), 0, 1);
 	if (TTF_Init() < 0)
 		s_err_handler("SDL_TTF", TTF_GetError(), 0, 1);
-	if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) < 0)
+	if (IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) < 0)
 		s_err_handler("SDL_IMG", IMG_GetError(), 0, 1);
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 		s_err_handler("SDL_IMG", SDL_GetError(), 0, 1);
