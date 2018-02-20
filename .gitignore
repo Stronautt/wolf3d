@@ -1,0 +1,5 @@
+*.o
+*.a
+obj
+wolf3d
+wolf3d.exe
