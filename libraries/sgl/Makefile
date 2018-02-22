@@ -6,7 +6,7 @@
 #    By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/10 17:05:19 by pgritsen          #+#    #+#              #
-#    Updated: 2018/02/10 14:49:45 by pgritsen         ###   ########.fr        #
+#    Updated: 2018/02/23 01:05:12 by pgritsen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,9 @@ HDRS		=	sgl.h sgl_private.h
 SRCS		=	sgl_draw_line.c sgl_plot.c sgl_new_window.c sgl_get_window.c	\
 				sgl_init.c sgl_get_font.c sgl_add_font.c sgl_quit.c				\
 				sgl_draw_str.c sgl_get_window_by_id.c sgl_resize_window.c		\
-				s_sys_handler.c sgl_vsync.c sgl_get.c sgl_blit_line.c
+				s_sys_handler.c sgl_vsync.c sgl_get.c sgl_blit_line.c			\
+				sgl_apply_mask.c sgl_fix_point.c sgl_imgload.c sgl_plot_m.c		\
+				sgl_rewite.c sgl_str_size.c
 
 OBJDIR		=	obj
 

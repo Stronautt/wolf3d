@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/05 17:31:29 by pgritsen          #+#    #+#             */
-/*   Updated: 2018/02/14 17:18:08 by pgritsen         ###   ########.fr       */
+/*   Updated: 2018/02/23 01:06:04 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,11 @@ int				sgl_quit(void);
 
 void			sgl_plot(t_point p, t_uint color, SDL_Surface *surface);
 
+void			sgl_plot_m(t_point p, t_uint color,
+							SDL_Surface *surface, t_uint mask);
+
+void			sgl_fix_point(t_point *p, SDL_Surface *surface);
+
 t_uint			sgl_get(SDL_Surface *surface, int x, int y);
 
 void			sgl_draw_line(t_point a, t_point b, t_uint color,
@@ -85,6 +90,8 @@ void			sgl_draw_line(t_point a, t_point b, t_uint color,
 
 void			sgl_draw_str(char *string, t_font *font_data,
 								t_point align, SDL_Surface *surface);
+
+SDL_Rect		sgl_str_size(t_font *font_data, char *string);
 
 t_sgl_window	*sgl_new_window(char *title, int width, int height, t_uint wm);
 
@@ -97,12 +104,15 @@ t_sgl_window	*sgl_get_window_by_id(t_uint id);
 
 TTF_Font		*sgl_get_font(t_font *font_data);
 
-void			sgl_render_surface(SDL_Renderer *renderer, SDL_Surface *surface,
-									t_point align);
+void			sgl_blit_line(SDL_Surface *sur[2], SDL_Rect src_r,
+								SDL_Rect dst_r, t_uint mask);
 
-void			sgl_blit_line(SDL_Surface *src, SDL_Surface *dst,
-								SDL_Rect src_r, SDL_Rect dst_r);
+void			sgl_apply_mask(SDL_Surface *surf, t_uint mask);
 
 void			sgl_vsync(void);
+
+void			sgl_rewite(t_uchar mode);
+
+SDL_Surface		*sgl_imgload(char *path);
 
 #endif

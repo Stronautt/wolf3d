@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:18:35 by pgritsen          #+#    #+#             */
-/*   Updated: 2018/02/12 17:45:55 by pgritsen         ###   ########.fr       */
+/*   Updated: 2018/02/23 01:03:38 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,11 @@ void				load_map(t_game *game, int level)
 
 	map[ft_strlen(map) - 5] = level + '0';
 	if ((fd = open(map, O_RDONLY)) == -1)
-		ft_err_handler(map, "Couldn't find map", 0, 1);
+	{
+		ft_err_handler(map, "Couldn't find map", 0, 0);
+		if ((fd = open(MAPS_FOLDER"level1.map", O_RDONLY)) == -1)
+			ft_err_handler(map, "Couldn't find map", 0, 1);
+	}
 	if (ft_get_next_line(fd, &line) != 1
 		|| elems_action((elems = ft_strsplit(line, ' ')), 0, 0) != 2)
 		return (ft_err_handler(map, "map invalid!", 0, 1));

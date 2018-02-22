@@ -6,14 +6,13 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/04 19:34:52 by pgritsen          #+#    #+#             */
-/*   Updated: 2018/02/14 00:24:10 by pgritsen         ###   ########.fr       */
+/*   Updated: 2018/02/23 01:01:20 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WOLF_H
 # define WOLF_H
 
-# include "libft.h"
 # include "sgl.h"
 # include <stdio.h>
 # include <errno.h>
@@ -23,10 +22,6 @@
 # include <time.h>
 # include <limits.h>
 # include <pthread.h>
-# include "SDL.h"
-# include "SDL_ttf.h"
-# include "SDL_image.h"
-# include "SDL_mixer.h"
 
 # define PROGRAM_NAME "Wolf 3D"
 
@@ -42,6 +37,12 @@
 
 # define THREADS 8
 
+# define MLG_DUR 25000
+
+# define SHOOT_CHANNEL 0
+
+# define MLG_CHANNEL 1
+
 # define TOP_WALL(n)((n & 0xFL) - 1)
 # define BOT_WALL(n)(((n & 0xF0L) >> 4) - 1)
 # define LEFT_WALL(n)(((n & 0xF000L) >> 12) - 1)
@@ -52,7 +53,10 @@
 
 # define IS_WALL(n)(n & 0xFFFFL)
 
-# define IS_PORTAL(n)((n & 0xF000000L) >> 24)
+# define SPRITE(n)((n & 0xF000000L) >> 24)
+# define IS_SSPRITE(n)((n & 0xF0000000L) >> 28)
+# define EREASE_SPRITE(n)(n &= 0xFFFFFFFF00FFFFFFL)
+# define EREASE_SSPRITE(n)(n &= 0xFFFFFFFF0FFFFFFFL)
 
 typedef t_dlist	t_wlist;
 
@@ -68,10 +72,10 @@ typedef struct	s_game
 	t_point		p_pos;
 	t_point		dir;
 	t_point		plane;
-	double		mov_speed;
-	double		rot_speed;
-	int			move;
-	int			rotate;
+	float		mov_speed;
+	float		rot_speed;
+	char		move;
+	char		rotate;
 	t_map		map;
 	t_uchar		state;
 	Mix_Music	*game_sound;
@@ -84,9 +88,21 @@ typedef struct	s_game
 	SDL_Surface	*menu_bg;
 	SDL_Surface	*w_t[16];
 	SDL_Surface	*s_t[16];
+	SDL_Surface	*st_t[16];
 	SDL_Surface	*f_t[4];
 	int			score;
-	int			shoot;
+	char		command[128];
+	t_uchar		inputmode;
+	t_uchar		mapdisplay;
+	t_uchar		godmode;
+	t_uint		damage;
+	t_uint		heal;
+	t_uint		health;
+	t_uint		shoot;
+	t_uint		hit;
+	t_uint		key;
+	t_uint		mlg;
+	t_uint		mlg_m[2];
 }				t_game;
 
 typedef struct	s_draw
@@ -101,7 +117,7 @@ typedef struct	s_draw
 typedef struct	s_thread
 {
 	SDL_Surface *screen;
-	t_game		gd;
+	t_game		*gd;
 	int			start;
 	int			end;
 }				t_thread;
@@ -140,6 +156,8 @@ void			move(t_game *game, double delta);
 
 void			rotate(t_game *game, double delta);
 
+void			shoot_dda(int *map, t_game *gd);
+
 /*
 **		Fps.c
 **		↓↓↓↓↓
@@ -148,11 +166,22 @@ void			rotate(t_game *game, double delta);
 void			display_fps(SDL_Surface *surface);
 
 /*
-**		Draw_game.c
-**		↓↓↓↓↓↓↓↓↓↓↓
+**		Draw.c
+**		↓↓↓↓↓↓
 */
 
 void			ft_draw_game(SDL_Surface *surface, t_game *game);
+
+/*
+**		Draw_ext.c
+**		↓↓↓↓↓↓↓↓↓↓
+*/
+
+void			draw_map(t_game *gd);
+
+void			draw_effects(t_game *gd);
+
+void			draw_sprite(t_game *gd, int *map);
 
 /*
 **		Map.c
@@ -186,6 +215,10 @@ void			ft_draw_levels(SDL_Surface *screen, t_game *gd);
 **		↓↓↓↓↓↓
 */
 
+void			death_cam_mouse(SDL_MouseButtonEvent e, t_game *gd);
+
+void			death_cam(SDL_Surface *screen, t_game *gd);
+
 void			ft_draw_hud(t_game *gd);
 
 /*
@@ -195,8 +228,23 @@ void			ft_draw_hud(t_game *gd);
 
 void			init_game(t_game *gd);
 
-void			reload_map(t_game *gd, int level);
+void			display_message(SDL_Surface *screen, char *mesg);
+
+void			reload_map(t_game *gd, int level, int pure);
 
 void			load_media(t_game *game);
+
+/*
+**		Fun.c
+**		↓↓↓↓↓
+*/
+
+void			item_actions(t_game *gd, long *cell, t_uint type);
+
+void			expose_actions(t_game gd);
+
+void			shoot(t_game *gd);
+
+void			ft_mlg(t_game *gd);
 
 #endif

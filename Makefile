@@ -6,7 +6,7 @@
 #    By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/10 17:05:19 by pgritsen          #+#    #+#              #
-#    Updated: 2018/02/14 17:26:06 by pgritsen         ###   ########.fr        #
+#    Updated: 2018/02/23 01:00:33 by pgritsen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ HDRS		=	$(addprefix $(HDRSDIR)/, wolf.h)
 SRCSDIR		=	./sources
 
 SRCS		=	main.c sys_handler.c event.c movement.c fps.c draw.c map.c	\
-				menu.c level_selector.c utils.c hud.c
+				menu.c level_selector.c utils.c hud.c fun.c draw_ext.c
 
 OBJDIR		=	./obj
 

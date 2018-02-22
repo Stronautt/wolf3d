@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 16:02:21 by pgritsen          #+#    #+#             */
-/*   Updated: 2018/02/12 14:31:38 by pgritsen         ###   ########.fr       */
+/*   Updated: 2018/02/23 01:03:46 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_draw_menu(SDL_Surface *screen, t_game *gd)
 		{4.5, 1.53, 6.72, 12.2, 1, "Quit"}, {.caption = NULL}};
 
 	if (bt_tex == NULL)
-		(bt_tex = IMG_Load(TEXTUTES_FOLDER"button.jpg")) == NULL
+		(bt_tex = sgl_imgload(TEXTUTES_FOLDER"button.jpg")) == NULL
 			? ft_err_handler(IMG_GetError(), NULL, 0, 1) : 0;
 	SDL_ShowCursor(SDL_ENABLE);
 	ft_bzero(screen->pixels, screen->w * screen->h * 4);
