@@ -27,6 +27,31 @@ All resources you can find in `resources` folder.
  - displaymap - Shows map of the level
  - exit - EXIT
 
+### Map Format:
+<pre>
+[height] [width]
+[player_position_x] [player_position_y]
+[cell] ... [cell]
+ ....  ...  ....
+[cell] ... [cell]
+</pre>
+
+#### Cell Format:
+It's `hex` number, each digit belongs to texture number, except last one.</br>
+Max-lenght og the cell number - 8 digits, e.g. `1ACB67FE`.</br>
+In square brackets index number of each digit.</br>
+<b>[1] [2] [3] [4] [5] [6] [7] [8]</b>
+
+<pre>
+if (`[8]` || `[7]` || `[6]` || `[5]`)
+    This cell is a wall
+else if (`[2]` && `[1]`)
+    This is a sprite through which you can not pass
+
+`[3]` - Floor texture number.
+`[4]` - Ceil texture number.
+</pre>
+
 ### Build:
 You can build a project from sources with cygwin project, you need these modules:
  - gcc-cilkplus
