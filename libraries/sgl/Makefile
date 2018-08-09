@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+         #
+#    By: phrytsenko <phrytsenko@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/10 17:05:19 by pgritsen          #+#    #+#              #
-#    Updated: 2018/02/20 14:24:06 by pgritsen         ###   ########.fr        #
+#    Updated: 2018/08/09 11:52:00 by phrytsenko       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME		=	libsgl.a
 
 CC			=	gcc
 
-CFLAGS		=	-Wextra -Werror -Wall -O3 -flto=thin -g3
+CFLAGS		=	-O3
+# CFLAGS		=	-g
 
 HDRS		=	sgl.h sgl_private.h
 
@@ -25,16 +26,11 @@ SRCS		=	sgl_draw_line.c sgl_plot.c sgl_new_window.c sgl_get_window.c	\
 				sgl_rewite.c sgl_fix_point.c sgl_apply_mask.c sgl_plot_m.c		\
 				sgl_imgload.c sgl_str_size.c
 
-OBJDIR		=	obj
+OBJDIR		=	./obj
 
 OBJ			=	$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 
 INCLUDES	=	-I ../libft
-INCLUDES	+=	-I../../frameworks/SDL2.framework/Headers
-INCLUDES	+=	-I../../frameworks/SDL2_ttf.framework/Headers
-INCLUDES	+=	-I../../frameworks/SDL2_image.framework/Headers
-INCLUDES	+=	-I../../frameworks/SDL2_mixer.framework/Headers
-INCLUDES	+=	-F../../frameworks
 
 all: $(NAME)
 
@@ -51,7 +47,7 @@ $(OBJDIR):
 
 $(OBJ): $(OBJDIR)/%.o : %.c $(HDRS)
 	@printf "\033[32m[Compiling $<].......\033[0m"
-	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
+	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES) `sdl2-config --cflags`
 	@printf "\033[32m[DONE]\033[0m\n"
 
 clean:

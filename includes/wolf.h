@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phrytsenko <phrytsenko@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/04 19:34:52 by pgritsen          #+#    #+#             */
-/*   Updated: 2018/02/20 17:44:34 by pgritsen         ###   ########.fr       */
+/*   Updated: 2018/08/09 11:43:47 by phrytsenko       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@
 # define MAPS_FOLDER "./resources/maps/"
 # define MAX_MAP_SIZE 1024
 
-# define EXIT_KEY SDLK_ESCAPE
+# define EXIT_KEY SDLK_q
 
 # define CL_MAX_SOURCE_SIZE 0x400000
 
-# define THREADS 8
+# define THREADS 16
 
 # define MLG_DUR 25000
 

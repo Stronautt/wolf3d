@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phrytsenko <phrytsenko@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/10 14:28:09 by pgritsen          #+#    #+#             */
-/*   Updated: 2018/02/20 15:44:10 by pgritsen         ###   ########.fr       */
+/*   Updated: 2018/08/09 11:41:21 by phrytsenko       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ inline static void	key_up(SDL_Event e, SDL_Scancode key, t_game *game)
 		game->rotate = 0;
 	key == SDL_SCANCODE_LSHIFT && game->state == 2 ? (game->mov_speed = 0.08)
 						&& (game->rot_speed = 0.05) : 0;
-	if (key == SDL_SCANCODE_TAB)
+	if (key == SDL_SCANCODE_TAB && e.window.windowID)
 	{
 		win = sgl_get_window_by_id(e.window.windowID)->p;
 		full_screen && !(full_screen = 0) ? SDL_SetWindowFullscreen(win, 0)
@@ -78,7 +78,7 @@ int					poll_event(t_game *game)
 	SDL_Event	e;
 
 	while (SDL_PollEvent(&e))
-		if (e.window.event == SDL_WINDOWEVENT_CLOSE
+		if (e.type == SDL_QUIT || e.window.event == SDL_WINDOWEVENT_CLOSE
 			|| (e.type == SDL_KEYDOWN && e.key.keysym.sym == EXIT_KEY))
 			return (sgl_quit());
 		else if (e.window.event == SDL_WINDOWEVENT_RESIZED)

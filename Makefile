@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+         #
+#    By: phrytsenko <phrytsenko@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/10 17:05:19 by pgritsen          #+#    #+#              #
-#    Updated: 2018/02/16 14:44:12 by pgritsen         ###   ########.fr        #
+#    Updated: 2018/08/09 11:51:23 by phrytsenko       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME		=	wolf3d
 
 CC			=	gcc
 
-CFLAGS		=	-Wextra -Werror -Wall -g3 -flto=thin -O3
+CFLAGS		=	-O3
+# CFLAGS		=	-g
 
 HDRSDIR		=	./includes
 
@@ -34,29 +35,17 @@ LIBFOLDER	=	./libraries
 LIBSDEPS	=	$(addprefix $(LIBFOLDER)/, libft/libft.a sgl/libsgl.a)
 
 INCLUDES	=	-I./includes
-INCLUDES	+=	-I./frameworks/SDL2.framework/Headers
-INCLUDES	+=	-I./frameworks/SDL2_ttf.framework/Headers
-INCLUDES	+=	-I./frameworks/SDL2_image.framework/Headers
-INCLUDES	+=	-I./frameworks/SDL2_mixer.framework/Headers
-INCLUDES	+=	-F./frameworks
 INCLUDES	+=	$(addprefix -I$(LIBFOLDER)/, libft sgl)
 
-LIBRARIES	=	$(addprefix -L$(LIBFOLDER)/, libft sgl) -lft -lsgl
+LIBRARIES	=	$(addprefix -L$(LIBFOLDER)/, libft sgl) -lsgl -lft `sdl2-config --libs` -lm -pthread -lSDL2_ttf -lSDL2_image -lSDL2_mixer
 
 RESDIR		=	resources
-
-FRAMEWDIR	=	frameworks
-
-FRAMEWORKS	=	$(addprefix -F./, $(FRAMEWDIR))
-FRAMEWORKS	+=	$(addprefix -rpath ./, $(FRAMEWDIR))
-FRAMEWORKS	+=	-framework OpenGL -framework AppKit -framework OpenCl		\
-				-framework SDL2 -framework SDL2_ttf -framework SDL2_image -framework SDL2_mixer
 
 all: lib $(NAME)
 
 $(NAME): $(OBJDIR) $(OBJ) $(HDRS) $(LIBSDEPS)
 	@printf "\n\033[32m[Creating $(NAME)].......\033[0m"
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBRARIES) $(FRAMEWORKS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBRARIES)
 	@printf "\033[32m[DONE]\033[0m\n"
 
 $(OBJDIR):
@@ -66,7 +55,7 @@ $(OBJDIR):
 
 $(OBJ): $(OBJDIR)/%.o : $(SRCSDIR)/%.c $(HDRS)
 	@printf "\033[32m[Compiling $<].......\033[0m"
-	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
+	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES) `sdl2-config --cflags`
 	@printf "\033[32m[DONE]\033[0m\n"
 
 $(LIBSDEPS): lib

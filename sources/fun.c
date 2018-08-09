@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fun.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: phrytsenko <phrytsenko@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 14:44:01 by pgritsen          #+#    #+#             */
-/*   Updated: 2018/02/19 21:02:23 by pgritsen         ###   ########.fr       */
+/*   Updated: 2018/08/09 11:50:00 by phrytsenko       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	spawn_gold(t_game *gd)
 	while (++i < gd->map.w && (j = -1))
 		while (++j < gd->map.h)
 			if (!IS_WALL(gd->map.data[i][j]) && !SPRITE(gd->map.data[i][j])
-				&& rand() % 17 == 0)
+				&& rand() % 7561 == 0)
 				gd->map.data[i][j] |= (0x9L << 24);
 }
 
