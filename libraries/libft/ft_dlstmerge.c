@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_dlstmerge.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/30 19:04:56 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/11/10 20:57:00 by pgritsen         ###   ########.fr       */
+/*   Created: 2018/09/02 14:09:32 by pgritsen          #+#    #+#             */
+/*   Updated: 2018/09/02 14:09:39 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_strcmp(const char *s1, const char *s2)
+#include "libft.h"
+
+t_dlist		*ft_dlstmerge(t_dlist **a, t_dlist **b)
 {
-	if (!s1 && !s2)
-		return (0);
-	else if (!s1)
-		return (-*s2);
-	else if (!s2)
-		return (*s1);
-	while (*s1 || *s2)
-		if (*s1++ != *s2++)
-			return ((unsigned char)*(s1 - 1) - (unsigned char)*(s2 - 1));
-	return (0);
+	if (!a)
+		return (NULL);
+	else if (!b)
+		return (*a);
+	else if (!*a || !*b)
+		return (*a = *b);
+	(*a)->next->prev = (*b)->prev;
+	(*b)->next->prev = (*a);
+	(*b)->prev->next = (*a)->next;
+	(*a)->next = (*b)->next;
+	ft_memdel((void **)&(*b)->content);
+	ft_memdel((void **)b);
+	return (*a);
 }

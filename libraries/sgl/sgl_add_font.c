@@ -31,6 +31,6 @@ TTF_Font	*sgl_add_font(t_font *font_data)
 	font->name = ft_strdup(font_data->name);
 	font->size = font_data->size;
 	font->ttf = font_data->ttf;
-	ft_dlstpush(&g_font_list, ft_dlstnew(&font, sizeof(font)));
+	ft_dlstpush(&g_font_list, ft_dlstnew(font, sizeof(font)));
 	return (font->ttf);
 }

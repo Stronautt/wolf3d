@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_memjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/30 19:04:56 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/11/10 20:57:00 by pgritsen         ###   ########.fr       */
+/*   Created: 2017/10/25 18:05:11 by pgritsen          #+#    #+#             */
+/*   Updated: 2018/05/29 21:25:07 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_strcmp(const char *s1, const char *s2)
+#include "libft.h"
+
+void	*ft_memjoin(const void *m1, const void *m2, size_t b1, size_t b2)
 {
-	if (!s1 && !s2)
-		return (0);
-	else if (!s1)
-		return (-*s2);
-	else if (!s2)
-		return (*s1);
-	while (*s1 || *s2)
-		if (*s1++ != *s2++)
-			return ((unsigned char)*(s1 - 1) - (unsigned char)*(s2 - 1));
-	return (0);
+	void	*new;
+
+	if (!m1 && !m2)
+		return (NULL);
+	if (!(new = (void *)malloc((b1 + b2))))
+		return (NULL);
+	ft_memcpy(new, m1, b1);
+	ft_memcpy(new + b1, m2, b2);
+	return (new);
 }

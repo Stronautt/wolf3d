@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_get_content.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/30 19:04:56 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/11/10 20:57:00 by pgritsen         ###   ########.fr       */
+/*   Created: 2018/03/05 19:34:16 by pgritsen          #+#    #+#             */
+/*   Updated: 2018/03/05 19:55:33 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_strcmp(const char *s1, const char *s2)
+#include "libft.h"
+
+char	*ft_get_content(const char *src, char open, char close)
 {
-	if (!s1 && !s2)
-		return (0);
-	else if (!s1)
-		return (-*s2);
-	else if (!s2)
-		return (*s1);
-	while (*s1 || *s2)
-		if (*s1++ != *s2++)
-			return ((unsigned char)*(s1 - 1) - (unsigned char)*(s2 - 1));
-	return (0);
+	char	*start_p;
+	char	*end_p;
+	char	*ret;
+
+	if (!(start_p = ft_strchr(src, open)))
+		return (NULL);
+	if (!(end_p = ft_strchr(start_p + 1, close)))
+		return (NULL);
+	if (!(ret = ft_strsub(start_p, 1, end_p - start_p - 1)))
+		return (NULL);
+	return (ret);
 }

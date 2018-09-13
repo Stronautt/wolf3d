@@ -14,8 +14,7 @@ NAME		=	libsgl.a
 
 CC			=	gcc
 
-CFLAGS		=	-O3
-# CFLAGS		=	-g
+CFLAGS		=	-Wextra -Werror -Wall -O3 -g3
 
 HDRS		=	sgl.h sgl_private.h
 
@@ -31,6 +30,16 @@ OBJDIR		=	./obj
 OBJ			=	$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 
 INCLUDES	=	-I ../libft
+
+ifeq ($(OS), Linux)
+	INCLUDES	+= `sdl2-config --cflags --libs` -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lm
+else
+	INCLUDES	+=	-I../../frameworks/SDL2.framework/Headers
+	INCLUDES	+=	-I../../frameworks/SDL2_ttf.framework/Headers
+	INCLUDES	+=	-I../../frameworks/SDL2_image.framework/Headers
+	INCLUDES	+=	-I../../frameworks/SDL2_mixer.framework/Headers
+	INCLUDES	+=	-F../../frameworks
+endif
 
 all: $(NAME)
 

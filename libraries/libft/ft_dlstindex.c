@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_dlstindex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/26 16:17:25 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/10 14:58:30 by pgritsen         ###   ########.fr       */
+/*   Created: 2018/06/07 20:26:29 by grevenko          #+#    #+#             */
+/*   Updated: 2018/06/07 20:44:23 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char const *s, int fd)
+t_dlist	*ft_dlstindex(t_dlist *lst, size_t index)
 {
-	if (!s)
-		return ;
-	fd = write(fd, s, ft_strlen(s));
+	t_dlist	*ret;
+
+	ret = lst;
+	while (ret && (ret = ret->next) != lst && index--)
+		;
+	return (index && ret != lst ? ret : 0);
 }

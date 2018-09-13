@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_vstrjoin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/30 19:04:56 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/11/10 20:57:00 by pgritsen         ###   ########.fr       */
+/*   Created: 2017/12/08 19:53:23 by pgritsen          #+#    #+#             */
+/*   Updated: 2018/02/02 18:21:52 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_strcmp(const char *s1, const char *s2)
+#include "libft.h"
+#include <stdarg.h>
+
+int		s_clean(void *data)
 {
-	if (!s1 && !s2)
-		return (0);
-	else if (!s1)
-		return (-*s2);
-	else if (!s2)
-		return (*s1);
-	while (*s1 || *s2)
-		if (*s1++ != *s2++)
-			return ((unsigned char)*(s1 - 1) - (unsigned char)*(s2 - 1));
+	free(data);
 	return (0);
+}
+
+char	*ft_vstrjoin(int n, ...)
+{
+	va_list	args;
+	char	*ret;
+
+	if (n <= 0)
+		return (NULL);
+	va_start(args, n);
+	ret = ft_strdup(va_arg(args, char *));
+	if (n == 1)
+		return (ret);
+	while (n-- > 1)
+		ret = ft_strjoin(ret, va_arg(args, char *)) - s_clean(ret);
+	va_end(args);
+	return (ret);
 }

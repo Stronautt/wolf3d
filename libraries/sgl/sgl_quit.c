@@ -24,11 +24,10 @@ inline static void	destroy_wins(void)
 	next = win->next;
 	while ((win = next) != g_win_list)
 	{
-		tmp = *(t_sgl_window **)win->content;
+		tmp = win->content;
 		ft_memdel((void **)&tmp->title);
 		SDL_DestroyWindow(tmp->p);
 		next = win->next;
-		ft_memdel((void **)&tmp);
 		ft_memdel((void **)&win->content);
 		ft_memdel((void **)&win);
 	}
@@ -47,11 +46,10 @@ inline static void	destroy_fonts(void)
 	next = font->next;
 	while ((font = next) != g_font_list)
 	{
-		tmp = *(t_font **)font->content;
+		tmp = font->content;
 		ft_memdel((void **)&tmp->name);
 		TTF_CloseFont(tmp->ttf);
 		next = font->next;
-		ft_memdel((void **)&tmp);
 		ft_memdel((void **)&font->content);
 		ft_memdel((void **)&font);
 	}

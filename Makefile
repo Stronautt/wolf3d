@@ -14,8 +14,11 @@ NAME		=	wolf3d
 
 CC			=	gcc
 
-CFLAGS		=	-O3
-# CFLAGS		=	-g
+CFLAGS		+=	-Wextra -Wextra -Wall -O3 -g3 -fno-unwind-tables				\
+				-fno-asynchronous-unwind-tables
+
+BFLAGS		=	-s -ffunction-sections -fdata-sections	-fno-ident				\
+				-fmerge-all-constants
 
 HDRSDIR		=	./includes
 
@@ -45,7 +48,7 @@ all: lib $(NAME)
 
 $(NAME): $(OBJDIR) $(OBJ) $(HDRS) $(LIBSDEPS)
 	@printf "\n\033[32m[Creating $(NAME)].......\033[0m"
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBRARIES)
+	@$(CC) $(CFLAGS) $(BFLAGS) -o $(NAME) $(OBJ) $(LIBRARIES)
 	@printf "\033[32m[DONE]\033[0m\n"
 
 $(OBJDIR):
@@ -55,7 +58,7 @@ $(OBJDIR):
 
 $(OBJ): $(OBJDIR)/%.o : $(SRCSDIR)/%.c $(HDRS)
 	@printf "\033[32m[Compiling $<].......\033[0m"
-	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES) `sdl2-config --cflags`
+	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
 	@printf "\033[32m[DONE]\033[0m\n"
 
 $(LIBSDEPS): lib

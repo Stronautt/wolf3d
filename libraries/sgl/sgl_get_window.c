@@ -22,7 +22,7 @@ t_sgl_window	*sgl_get_window(char *title)
 	win = g_win_list;
 	while ((win = win->next) != g_win_list)
 	{
-		tmp = *(t_sgl_window **)win->content;
+		tmp = win->content;
 		if (!ft_strcmp(tmp->title, title))
 			return (tmp);
 	}

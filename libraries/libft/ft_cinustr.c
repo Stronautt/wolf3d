@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_cinustr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/30 19:04:56 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/11/10 20:57:00 by pgritsen         ###   ########.fr       */
+/*   Created: 2018/08/26 19:48:01 by pgritsen          #+#    #+#             */
+/*   Updated: 2018/08/26 20:09:16 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_strcmp(const char *s1, const char *s2)
+#include "libft.h"
+
+size_t	ft_cinustr(const char *s)
 {
-	if (!s1 && !s2)
+	size_t				ret;
+	const unsigned char	*p_s;
+
+	if (!s)
 		return (0);
-	else if (!s1)
-		return (-*s2);
-	else if (!s2)
-		return (*s1);
-	while (*s1 || *s2)
-		if (*s1++ != *s2++)
-			return ((unsigned char)*(s1 - 1) - (unsigned char)*(s2 - 1));
-	return (0);
+	p_s = (const unsigned char *)s;
+	ret = 0;
+	while (*p_s && ++ret)
+	{
+		if (*p_s == 0x1B)
+			p_s += 8;
+		else if (*p_s >= 0xC2 && *p_s <= 0xDF)
+			p_s += 2;
+		else if (*p_s >= 0xE0 && *p_s <= 0xEF)
+			p_s += 3;
+		else if (*p_s >= 0xF0 && *p_s <= 0xF4)
+			p_s += 4;
+		else
+			p_s += 1;
+	}
+	return (ret);
 }

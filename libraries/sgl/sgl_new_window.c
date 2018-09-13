@@ -34,6 +34,6 @@ t_sgl_window	*sgl_new_window(char *title, int width, int height, t_uint wm)
 	SDL_FreeSurface(icon);
 	!(new->surface = SDL_GetWindowSurface(new->p))
 		? s_err_handler("SDL", SDL_GetError(), 0, 1) : 0;
-	ft_dlstpush(&g_win_list, ft_dlstnew(&new, sizeof(new)));
+	ft_dlstpush(&g_win_list, ft_dlstnew(new, sizeof(new)));
 	return (new);
 }
